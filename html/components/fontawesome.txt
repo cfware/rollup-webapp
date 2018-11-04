@@ -1,0 +1,3 @@
+web-content.svg is from https://fontawesome.com/icons/smile?style=solid
+
+License at https://fontawesome.com/license

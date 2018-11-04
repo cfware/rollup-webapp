@@ -1,0 +1,122 @@
+{
+	"name": "@cfware/rollup-webapp",
+	"version": "0.0.0",
+	"description": "Web Application Template",
+	"private": true,
+	"scripts": {
+		"test": "xo && nyc ava && gulp -L snapshots",
+		"start": "gulp start",
+		"prepack": "gulp rebuild"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cfware/rollup-webapp.git"
+	},
+	"keywords": [
+		"rollup",
+		"babel",
+		"customelements",
+		"browser"
+	],
+	"files": [
+		"wwwroot/**"
+	],
+	"author": "Corey Farrell",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/cfware/rollup-webapp/issues"
+	},
+	"homepage": "https://github.com/cfware/rollup-webapp#readme",
+	"devDependencies": {
+		"@babel/core": "^7.1.2",
+		"@babel/plugin-syntax-import-meta": "^7.0.0",
+		"@babel/preset-env": "^7.1.0",
+		"@babel/register": "^7.0.0",
+		"@gulp-sourcemaps/map-sources": "^1.0.0",
+		"@polymer/lit-element": "^0.6.2",
+		"ansi-colors": "^3.2.1",
+		"arrify": "^1.0.1",
+		"ava": "^1.0.0-rc.1",
+		"babel-eslint": "^10.0.1",
+		"babel-plugin-bare-import-rewrite": "^1.0.0",
+		"babel-plugin-bundled-import-meta": "^0.2.0",
+		"babel-plugin-istanbul": "^5.1.0",
+		"babel-plugin-template-html-minifier": "^2.0.1",
+		"babel-preset-minify": "^0.5.0",
+		"chromedriver": "^2.43.1",
+		"del": "^3.0.0",
+		"esm": "^3.0.84",
+		"fastify": "^1.13.0",
+		"fastify-babel": "^1.0.2",
+		"fastify-static": "^0.14.0",
+		"geckodriver": "^1.12.2",
+		"gulp": "^4.0.0",
+		"gulp-if": "^2.0.2",
+		"gulp-markdown": "^3.0.0",
+		"gulp-rename": "^1.4.0",
+		"gulp-replace": "^1.0.0",
+		"gulplog": "^1.0.0",
+		"interpret": "gulpjs/interpret#master",
+		"istanbul-lib-coverage": "^2.0.1",
+		"merge2": "^1.2.3",
+		"nyc": "^13.1.0",
+		"pump": "^3.0.0",
+		"rollup": "^0.66.6",
+		"rollup-plugin-babel": "^4.0.3",
+		"selenium-webdriver": "^4.0.0-alpha.1",
+		"vinyl-rollup": "^0.1.0",
+		"xo": "^0.23.0"
+	},
+	"nyc": {
+		"all": true,
+		"es-modules": true,
+		"check-coverage": true,
+		"per-file": true,
+		"lines": 100,
+		"statements": 100,
+		"functions": 100,
+		"branches": 100,
+		"exclude": [
+			"**/node_modules/**",
+			"babel.config.js",
+			"coverage/**",
+			"wwwroot/**",
+			"gulpfile.*",
+			"helpers/**",
+			"test/**"
+		],
+		"reporter": [
+			"text",
+			"html"
+		]
+	},
+	"xo": {
+		"overrides": [
+			{
+				"files": [
+					"html/**",
+					"test/fixtures/**"
+				],
+				"parser": "babel-eslint",
+				"envs": [
+					"browser",
+					"es6"
+				],
+				"rules": {
+					"import/no-unassigned-import": "off",
+					"no-unused-expressions": [
+						"error",
+						{
+							"allowTaggedTemplates": true
+						}
+					]
+				}
+			}
+		]
+	},
+	"ava": {
+		"require": [
+			"@babel/register"
+		]
+	}
+}

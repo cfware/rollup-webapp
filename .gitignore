@@ -1,0 +1,6 @@
+*.tgz
+.nyc_output/
+coverage/
+node_modules/
+localhost.*.pem
+wwwroot/
