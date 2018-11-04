@@ -47,6 +47,16 @@ function serveSource(fastify, opts, next) {
 function serveBuilt(fastify, opts, next) {
 	const rootPrefix = '/wwwroot';
 	const prefix = `${rootPrefix}/`;
+
+	try {
+		fs.mkdirSync(wwwroot);
+	} catch (error) {
+		if (error.code !== 'EEXIST') {
+			console.log('code:', error.code);
+			throw error;
+		}
+	}
+
 	fastify
 		.register(fastifyStatic, {
 			prefix,
