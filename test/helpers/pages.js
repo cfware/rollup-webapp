@@ -9,6 +9,21 @@ page('app.html', async t => {
 	await grabImage(ele);
 });
 
+page('camel-case.html', async t => {
+	const {selenium, grabImage, checkText} = t.context;
+	const ele = await selenium.findElement({id: 'test'});
+
+	await checkText(ele, 'camelCase');
+	await grabImage(ele);
+
+	await selenium.executeScript(ele => {
+		ele.value = 'new-value';
+	}, ele);
+
+	await checkText(ele, 'newValue');
+	await grabImage(ele, 'new-value');
+});
+
 page('web-content.html', async t => {
 	const {selenium, grabImage, checkText} = t.context;
 	const ele = await selenium.findElement({id: 'test'});

@@ -24,7 +24,8 @@ export const babelrc = {
 	configFile: false,
 	plugins: [
 		'@babel/plugin-proposal-object-rest-spread',
-		'@babel/plugin-syntax-import-meta'
+		'@babel/plugin-syntax-import-meta',
+		'transform-commonjs'
 	],
 	env: {
 		production: {

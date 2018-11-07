@@ -23,6 +23,25 @@ with the actual web application contents.  See:
 * [Polymer/pwa-starter-kit]
 
 
+## Usage
+
+All commands require `npm install` be run first.
+
+|Command|Description|
+|-|-|
+npm test|Run [automated tests](#running-tests)
+npm start|This is an alias to `gulp start`.
+npm pack|Rebuild `wwwroot/`, create an npm compatible tarball.
+gulp clean|Delete `wwwroot/`
+gulp build|Build `wwwroot/`
+gulp rebuild|Delete then build `wwwroot/`
+gulp snapshots|Process [snapshot files](#snapshot-processing)
+gulp start|Start the [development web server](#manual-testing)
+
+Note that if `gulp` is not installed globally you will need to use the `npx` command
+to directly run the local copy.  For example `npx gulp rebuild`.
+
+
 ## Features
 
 This build system targets latest browsers only.  Additional steps are required to support
@@ -36,13 +55,6 @@ polyfill from your HTML file.
 * Other features of modern JavaScript (ES2015+) are likely used.  Older browsers can be
 supported by adding [@babel/preset-env] to `babelrc` in [helpers/utils.js] with the
 appropriate `targets` set.
-
-
-### fastify-babel [readme](https://github.com/cfware/fastify-babel#readme)
-
-This is needed to replicate functionality provided by `polymer serve` so your page can
-be previewed without a build step.  At minimum `bare-import-rewrite` must be an included
-babel plugin provided to [fastify-babel] because browsers do not allow bare imports.
 
 
 ### babel-plugin-bare-import-rewrite [readme](https://github.com/cfware/babel-plugin-bare-import-rewrite#readme)
@@ -76,13 +88,35 @@ into `wwwroot/index.js`, thus without adjustment `svgFile` would point to `http:
 instead of `http://hostname/approot/components/web-content.svg`.
 
 
-### vinyl-rollup [readme](https://github.com/cfware/vinyl-rollup#readme)
+### babel-plugin-istanbul [readme](https://github.com/istanbuljs/babel-plugin-istanbul#readme)
 
-It is definitely possible to use rollup directly, this is a helper which initializes a stream
-of vinyl objects so additional steps can be performed before using `gulp.dest` to finally
-write the files.  `vinyl-rollup` also has the benefit of copying some or all files from
-bundled modules.  This can be helpful for license compliance reasons and for simply
-documenting the versions of included packages.
+This is enabled for `npm test` only.  Coverage collection is added to JavaScript before
+serving to the browser.  This makes it possible to see if any code is not run.  Coverage
+data from each test is merged with [istanbul-lib-coverage] and reported by [nyc].
+
+
+### babel-plugin-template-html-minifier [readme](https://github.com/goto-bus-stop/babel-plugin-template-html-minifier#readme)
+
+This plugin runs `html-minifier` on specified templates.  [helpers/utils.js] is configured
+to minify `lit-html` and `lit-element` templates in the production profile.
+
+
+### babel-plugin-transform-commonjs [readme](https://github.com/tbranyen/babel-plugin-transform-commonjs#readme)
+
+This plugin is makes it possible for browser scripts to use CommonJS modules.  This can be
+useful as most modules on node.js are written in CommonJS and the build system only supports
+ES modules.  Note this is a single purpose plugin.  It will not fix browser compatibility
+issues that are present in many complex node.js modules.
+
+Although the production build process could use [rollup-plugin-commonjs] this cannot be
+used by the test server for live transpilation.
+
+
+### fastify-babel [readme](https://github.com/cfware/fastify-babel#readme)
+
+This is needed to replicate functionality provided by `polymer serve` so your page can
+be previewed without a build step.  At minimum `bare-import-rewrite` must be an included
+babel plugin provided to [fastify-babel] because browsers do not allow bare imports.
 
 
 ### @gulp-sourcemaps/map-sources [readme](https://github.com/gulp-sourcemaps/map-sources#readme)
@@ -91,6 +125,15 @@ This gulp plugin provides an easy way to rewrite references to sources in source
 [helpers/build.js] uses this to rewrite references to `node_modules` to instead be in `./assets`.
 Additionally this is used to strip the prefix from the main source file so `index.js.map` doesn't
 point to `html/index.js` is the original source.
+
+
+### vinyl-rollup [readme](https://github.com/cfware/vinyl-rollup#readme)
+
+It is definitely possible to use rollup directly, this is a helper which initializes a stream
+of vinyl objects so additional steps can be performed before using `gulp.dest` to finally
+write the files.  `vinyl-rollup` also has the benefit of copying some or all files from
+bundled modules.  This can be helpful for license compliance reasons and for simply
+documenting the versions of included packages.
 
 
 ## devDependencies vs dependencies
@@ -127,6 +170,9 @@ returns a blank string when you run `getText` on an element that includes shadow
 This has been reported to at https://github.com/mozilla/geckodriver/issues/1417 though
 it's unclear what the solution will be.
 
+Test browsers must support ES modules including `import.meta.url`.
+
+
 ### Manual testing
 
 You can start the test web server by running `npm start`.  This will allow you to browse
@@ -136,8 +182,30 @@ makes it possible to change sources in `./html` and simply refresh the browser w
 the need to `npm run build`.
 
 The test web server will also serve `./wwwroot` via http://localhost:3000/wwwroot.  The wwwroot
-folder is not automatically built, you must `npm run build` to see updates.  This allows
+folder is not automatically built, you must `gulp rebuild` to see updates.  This allows
 manual verification that the `production` babel configuration does not introduce bugs.
+
+HTTP/2 is enabled if `localhost.key.pem` and `localhost.crt.pem` are available.  This will
+enable https://localhost:3001, the same paths served from port 3000 are available.
+
+Much like automated testing the pages hosted at `/app` require ES module support including
+`import.meta.url`.  Older browsers can only be tested via `/wwwroot`, and then only if
+rollup/babel has the proper configuration to enable support of those browsers.
+
+
+### Snapshot processing
+
+`ava` supports snapshot based testing.  When used this will produce binary `.snap` files
+and `.md` files.  HTML files for each snapshot `.md` can be produced by `gulp snapshots`.
+This includes special processing for `t.context.snapshotImage` to display the screen
+capture instead of the base64 code.  Note that `t.context.snapshotImage` is fragile and
+not recommended.  A snapshot image produced by Firefox on Fedora 28 is not identical to
+an image produced by the Travis-CI.  A single pixel being different will cause the test
+to fail.  It is better to use `t.context.grabImage` and periodically reviewing the images.
+The example tests use this function to create PNG files in [tests/images].  These images
+are committed so `git status` run after testing will show if they changed.  In situations
+where tests are performed on multiple different systems it might be better to `.gitignore`
+the grabbed images.
 
 
 [travis-image]: https://travis-ci.org/cfware/rollup-webapp.svg?branch=master
@@ -155,9 +223,12 @@ manual verification that the `production` babel configuration does not introduce
 [gulp@4]: https://gulpjs.com/
 [rollup]: https://rollupjs.org/guide/en
 [rollup-plugin-babel]: https://github.com/rollup/rollup-plugin-babel#readme
+[rollup-plugin-commonjs]: https://github.com/rollup/rollup-plugin-commonjs#readme
 [xo]: https://github.com/xojs/xo#readme
 [ava]: https://github.com/avajs/ava#readme
 [@babel/preset-env]: https://babeljs.io/docs/en/babel-preset-env#options
+[istanbul-lib-coverage]: https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-lib-coverage#readme
+[nyc]: https://github.com/istanbuljs/nyc#readme
 
 [package.json]: https://github.com/cfware/rollup-webapp/blob/master/package.json
 [helpers/utils.js]: https://github.com/cfware/rollup-webapp/blob/master/helpers/utils.js
@@ -166,3 +237,4 @@ manual verification that the `production` babel configuration does not introduce
 [test/firefox.js]: https://github.com/cfware/rollup-webapp/blob/master/test/firefox.js
 [test/chrome.js]: https://github.com/cfware/rollup-webapp/blob/master/test/chrome.js
 [test/helpers/pages.js]: https://github.com/cfware/rollup-webapp/blob/master/test/helpers/pages.js
+[tests/images]: https://github.com/cfware/rollup-webapp/tree/master/test/images/
