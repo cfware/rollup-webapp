@@ -31,12 +31,12 @@
 		"@babel/core": "^7.1.2",
 		"@babel/preset-env": "^7.1.0",
 		"@babel/register": "^7.0.0",
+		"@cfware/eslint-config-browser": "^0.1.2",
 		"@gulp-sourcemaps/map-sources": "^1.0.0",
 		"@polymer/lit-element": "^0.6.2",
 		"ansi-colors": "^3.2.1",
 		"arrify": "^1.0.1",
 		"ava": "^1.0.0-rc.1",
-		"babel-eslint": "^10.0.1",
 		"babel-plugin-bare-import-rewrite": "^1.0.0",
 		"babel-plugin-bundled-import-meta": "^0.2.0",
 		"babel-plugin-istanbul": "^5.1.0",
@@ -94,20 +94,7 @@
 					"html/**",
 					"test/fixtures/**"
 				],
-				"parser": "babel-eslint",
-				"envs": [
-					"browser",
-					"es6"
-				],
-				"rules": {
-					"import/no-unassigned-import": "off",
-					"no-unused-expressions": [
-						"error",
-						{
-							"allowTaggedTemplates": true
-						}
-					]
-				}
+				"extends": "@cfware/eslint-config-browser"
 			}
 		]
 	},
