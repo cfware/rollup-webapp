@@ -22,9 +22,13 @@ function bareImportRewrite(production) {
 export const babelrc = {
 	babelrc: false,
 	configFile: false,
+	parserOpts: {
+		plugins: [
+			'objectRestSpread',
+			'importMeta'
+		]
+	},
 	plugins: [
-		'@babel/plugin-proposal-object-rest-spread',
-		'@babel/plugin-syntax-import-meta',
 		'transform-commonjs'
 	],
 	env: {
