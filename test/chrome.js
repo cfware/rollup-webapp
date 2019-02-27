@@ -1,8 +1,4 @@
-import {Builder} from 'selenium-webdriver';
-import chromedriver from 'selenium-webdriver/chrome';
+import {builderChrome} from '@cfware/ava-selenium-manager';
 import {setupTesting} from './helpers/pages';
 
-setupTesting(__filename, new Builder()
-	.forBrowser('chrome')
-	.setChromeOptions(new chromedriver.Options().headless())
-);
+setupTesting(builderChrome);

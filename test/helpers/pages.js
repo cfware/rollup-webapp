@@ -1,5 +1,5 @@
 import {server} from '../../helpers/start';
-import {build, daemon, page} from './selenium';
+import {setup, page} from '@cfware/ava-selenium-manager';
 
 page('app.html', async t => {
 	const {selenium, grabImage, checkText} = t.context;
@@ -44,20 +44,20 @@ page('web-content.html', async t => {
 	await grabImage(ele, 'happy');
 });
 
-export function setupTesting(file, builder) {
-	build(file, builder);
-	daemon({
-		async factory() {
+export function setupTesting(browserBuilder) {
+	setup({
+		browserBuilder,
+		async daemonFactory() {
 			const daemon = server();
 
 			await daemon.listen(0);
 
 			return daemon;
 		},
-		stop(daemon) {
+		daemonStop(daemon) {
 			daemon.server.unref();
 		},
-		getURL(t, daemon, pathname) {
+		daemonGetURL(daemon, pathname) {
 			return `http://localhost:${daemon.server.address().port}/test/${pathname}`;
 		}
 	});
