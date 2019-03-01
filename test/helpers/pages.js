@@ -21,6 +21,9 @@ page('camel-case.html', async t => {
 		ele.value = 'new-value';
 	}, ele);
 
+	/* Wait for debounce */
+	await selenium.sleep(50);
+
 	await checkText(ele, 'newValue');
 	await grabImage(ele, 'new-value');
 });
@@ -35,12 +38,20 @@ page('web-content.html', async t => {
 	await selenium.executeScript(ele => {
 		ele.setAttribute('mood', 'simple');
 	}, ele);
+
+	/* Wait for debounce */
+	await selenium.sleep(50);
+
 	await checkText(ele, 'Web Components are simple!');
 	await grabImage(ele, 'simple');
 
 	await selenium.executeScript(ele => {
 		ele.mood = 'happy';
 	}, ele);
+
+	/* Wait for debounce */
+	await selenium.sleep(50);
+
 	await checkText(ele, 'Web Components are happy!');
 	await grabImage(ele, 'happy');
 });

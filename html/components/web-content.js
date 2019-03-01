@@ -1,20 +1,9 @@
-import {LitElement, html} from '@polymer/lit-element';
+import {ShadowElement, html} from '@cfware/shadow-element';
 
 const svgFile = import.meta.url.replace(/\.js$/, '.svg');
 
-class WebContent extends LitElement {
-	constructor() {
-		super();
-		this.mood = 'easy';
-	}
-
-	static get properties() {
-		return {
-			mood: {type: String}
-		};
-	}
-
-	render() {
+class WebContent extends ShadowElement {
+	get template() {
 		return html`
 			<style>
 				img {
@@ -24,8 +13,12 @@ class WebContent extends LitElement {
 			</style>
 			<img src="${svgFile}">
 			Web Components are <span class="mood">${this.mood}</span>!
-			`;
+		`;
 	}
 }
 
-customElements.define('web-content', WebContent);
+WebContent.define('web-content', {
+	stringProps: {
+		mood: 'easy'
+	}
+});

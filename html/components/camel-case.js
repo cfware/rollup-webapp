@@ -1,18 +1,16 @@
 /* The only point of this custom element is to demonstrate import of
  * CommonJS 'camelcase' module. */
-import {LitElement, html} from '@polymer/lit-element';
+import {ShadowElement, html} from '@cfware/shadow-element';
 import camelcase from 'camelcase';
 
-class CamelCase extends LitElement {
-	static get properties() {
-		return {
-			value: {type: String}
-		};
-	}
-
-	render() {
+class CamelCase extends ShadowElement {
+	get template() {
 		return html`${camelcase(this.value)}`;
 	}
 }
 
-customElements.define('camel-case', CamelCase);
+CamelCase.define('camel-case', {
+	stringProps: {
+		value: ''
+	}
+});

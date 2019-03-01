@@ -1,8 +1,8 @@
-import {LitElement, html} from '@polymer/lit-element';
+import {ShadowElement, html} from '@cfware/shadow-element';
 import './components/web-content';
 
-class WebApp extends LitElement {
-	render() {
+class WebApp extends ShadowElement {
+	get template() {
 		return html`
 			<style>
 				:host {
@@ -14,8 +14,9 @@ class WebApp extends LitElement {
 					right: 0;
 				}
 			</style>
-			<web-content></web-content>`;
+			<web-content></web-content>
+		`;
 	}
 }
 
-customElements.define('web-app', WebApp);
+WebApp.define('web-app');

@@ -29,7 +29,7 @@ export const babelrc = {
 		]
 	},
 	plugins: [
-		'transform-commonjs'
+		'remove-ungap'
 	],
 	env: {
 		production: {
@@ -43,8 +43,7 @@ export const babelrc = {
 			plugins: [
 				['template-html-minifier', {
 					modules: {
-						'@polymer/lit-element': ['html'],
-						'lit-html': ['html']
+						'@cfware/shadow-element': ['html']
 					},
 					htmlMinifier: {
 						collapseWhitespace: true,
@@ -76,5 +75,12 @@ export const babelrc = {
 				'istanbul'
 			]
 		}
-	}
+	},
+	/* For now target specific modules only, transform-commonjs sometimes makes unwanted changes. */
+	overrides: [{
+		test: [
+			rootPath('node_modules/camelcase/**')
+		],
+		plugins: ['transform-commonjs']
+	}]
 };
