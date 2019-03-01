@@ -18,7 +18,7 @@ function clearDaemons() {
 	});
 }
 
-function serveSource(fastify, opts, next) {
+export function serveSource(fastify, opts, next) {
 	const decorateReply = false;
 	const prefix = `${testRootURL}/`;
 
@@ -68,7 +68,7 @@ function serveBuilt(fastify, opts, next) {
 	next();
 }
 
-export function server(settings = {}) {
+function server(settings = {}) {
 	const daemon = fastify(settings);
 
 	daemon.register(serveSource);

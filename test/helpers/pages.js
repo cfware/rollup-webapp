@@ -1,5 +1,6 @@
-import {server} from '../../helpers/start';
 import {setup, page} from '@cfware/ava-selenium-manager';
+import {FastifyTestHelper} from '@cfware/fastify-test-helper';
+import {serveSource} from '../../helpers/start';
 
 page('app.html', async t => {
 	const {selenium, grabImage, checkText} = t.context;
@@ -45,20 +46,8 @@ page('web-content.html', async t => {
 });
 
 export function setupTesting(browserBuilder) {
-	setup({
-		browserBuilder,
-		async daemonFactory() {
-			const daemon = server();
-
-			await daemon.listen(0);
-
-			return daemon;
-		},
-		daemonStop(daemon) {
-			daemon.server.unref();
-		},
-		daemonGetURL(daemon, pathname) {
-			return `http://localhost:${daemon.server.address().port}/test/${pathname}`;
-		}
-	});
+	setup(new FastifyTestHelper(browserBuilder, {
+		testsPrefix: '/test/',
+		fastifyPlugin: serveSource
+	}));
 }
