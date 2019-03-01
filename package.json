@@ -4,7 +4,7 @@
 	"description": "Web Application Template",
 	"private": true,
 	"scripts": {
-		"test": "xo && nyc ava",
+		"test": "xo && nyc ava -sv",
 		"start": "gulp start",
 		"prepack": "gulp rebuild"
 	},
