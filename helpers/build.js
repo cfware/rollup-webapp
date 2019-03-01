@@ -46,6 +46,7 @@ function rollup() {
 				if (file.sourceMap) {
 					file.sourceMap.file = file.basename;
 				}
+
 				return true;
 			},
 			mapSources(sourcePath => sourcePath.replace(relativeModules, './assets'))
