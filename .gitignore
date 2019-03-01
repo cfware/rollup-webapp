@@ -4,3 +4,4 @@ coverage/
 node_modules/
 localhost.*.pem
 wwwroot/
+test/images/**
