@@ -33,13 +33,6 @@ export const babelrc = {
 	],
 	env: {
 		production: {
-			/* Comments are visible from the source-maps and in the assets directory
-			 * produced by rollup. */
-			comments: false,
-			minified: true,
-			presets: [
-				'minify'
-			],
 			plugins: [
 				['template-html-minifier', {
 					modules: {

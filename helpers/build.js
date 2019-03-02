@@ -7,6 +7,7 @@ import pump from 'pump';
 import merge2 from 'merge2';
 import vinylRollup from 'vinyl-rollup';
 import babel from 'rollup-plugin-babel';
+import { terser } from "rollup-plugin-terser";
 import sourcemapsMapSources from '@gulp-sourcemaps/map-sources';
 import sourcemapsSourcesContent from '@gulp-sourcemaps/sources-content';
 import sourcemapsMapFile from '@gulp-sourcemaps/map-file';
@@ -29,7 +30,13 @@ function rollup() {
 		vinylRollup({
 			rollup: {
 				input: bundleEntry,
-				plugins: [babel(babelrc)],
+				plugins: [
+					babel(babelrc),
+					terser({
+						ecma: 8,
+						module: true
+					})
+				],
 				output: {
 					format: 'esm',
 					sourcemap: true,
