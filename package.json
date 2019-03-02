@@ -41,7 +41,7 @@
 		"ansi-colors": "^3.2.3",
 		"ava": "^1.2.1",
 		"babel-plugin-bare-import-rewrite": "^1.3.1",
-		"babel-plugin-bundled-import-meta": "^0.2.2",
+		"babel-plugin-bundled-import-meta": "^0.3.0",
 		"babel-plugin-istanbul": "^5.1.1",
 		"babel-plugin-remove-ungap": "^1.0.0",
 		"babel-plugin-template-html-minifier": "^2.2.1",
