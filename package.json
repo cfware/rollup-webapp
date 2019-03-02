@@ -49,7 +49,6 @@
 		"camelcase": "^5.0.0",
 		"chromedriver": "^2.46.0",
 		"del": "^3.0.0",
-		"esm": "^3.2.7",
 		"fastify": "^2.0.0",
 		"fastify-babel": "^1.1.0",
 		"fastify-static": "^2.3.4",
