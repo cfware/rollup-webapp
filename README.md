@@ -1,5 +1,7 @@
 # @cfware/rollup-webapp
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/cfware/rollup-webapp.svg)](https://greenkeeper.io/)
+
 [![Travis CI][travis-image]][travis-url]
 [![MIT][license-image]](LICENSE)
 
