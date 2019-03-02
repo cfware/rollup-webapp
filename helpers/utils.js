@@ -1,4 +1,5 @@
 import path from 'path';
+import terser from 'terser';
 
 export const rootPath = (...args) => path.resolve(__dirname, '..', ...args);
 export const wwwroot = rootPath('wwwroot');
@@ -16,6 +17,11 @@ function bareImportRewrite(production) {
 	];
 }
 
+export const minifyJS = {
+	ecma: 8,
+	module: true
+};
+
 export const minifyCSS = {
 	level: 2
 };
@@ -24,7 +30,7 @@ export const htmlMinifier = {
 	collapseWhitespace: true,
 	removeComments: true,
 	minifyCSS,
-	minifyJS: true,
+	minifyJS: text => terser.minify(text, minifyJS).code,
 	keepClosingSlash: true
 };
 

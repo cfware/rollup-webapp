@@ -9,11 +9,11 @@ import pump from 'pump';
 import merge2 from 'merge2';
 import vinylRollup from 'vinyl-rollup';
 import babel from 'rollup-plugin-babel';
-import { terser } from "rollup-plugin-terser";
+import {terser} from 'rollup-plugin-terser';
 import sourcemapsMapSources from '@gulp-sourcemaps/map-sources';
 import sourcemapsSourcesContent from '@gulp-sourcemaps/sources-content';
 import sourcemapsMapFile from '@gulp-sourcemaps/map-file';
-import {wwwroot, rootPath, babelrc, minifyCSS, htmlMinifier} from './utils';
+import {wwwroot, rootPath, babelrc, minifyCSS, htmlMinifier, minifyJS} from './utils';
 
 function renameAssets() {
 	const nodeModulesEx = /^node_modules/;
@@ -34,10 +34,7 @@ function rollup() {
 				input: bundleEntry,
 				plugins: [
 					babel(babelrc),
-					terser({
-						ecma: 8,
-						module: true
-					})
+					terser(minifyJS)
 				],
 				output: {
 					format: 'esm',
