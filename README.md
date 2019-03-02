@@ -1,8 +1,7 @@
 # @cfware/rollup-webapp
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/cfware/rollup-webapp.svg)](https://greenkeeper.io/)
-
 [![Travis CI][travis-image]][travis-url]
+[![Greenkeeper badge][gk-image]](https://greenkeeper.io/)
 [![MIT][license-image]](LICENSE)
 
 Web Application Template
@@ -212,6 +211,7 @@ the grabbed images.
 
 [travis-image]: https://travis-ci.org/cfware/rollup-webapp.svg?branch=master
 [travis-url]: https://travis-ci.org/cfware/rollup-webapp
+[gk-image]: https://badges.greenkeeper.io/cfware/ava-selenium-manager.svg
 [license-image]: https://img.shields.io/github/license/cfware/rollup-webapp.svg
 
 [polymer-tools]: https://github.com/Polymer/tools
