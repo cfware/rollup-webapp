@@ -16,6 +16,18 @@ function bareImportRewrite(production) {
 	];
 }
 
+export const minifyCSS = {
+	level: 2
+};
+
+export const htmlMinifier = {
+	collapseWhitespace: true,
+	removeComments: true,
+	minifyCSS,
+	minifyJS: true,
+	keepClosingSlash: true
+};
+
 /* Only necessary plugins / presets should be used by development and test env's.
  * Minifying is generally not recommended as this will slow the test web server
  * without much benefit as bandwidth is not an issue when browsing localhost. */
@@ -38,12 +50,7 @@ export const babelrc = {
 					modules: {
 						'@cfware/shadow-element': ['html']
 					},
-					htmlMinifier: {
-						collapseWhitespace: true,
-						removeComments: true,
-						minifyCSS: {level: 2},
-						minifyJS: true
-					}
+					htmlMinifier
 				}],
 				bareImportRewrite(true),
 				['bundled-import-meta', {

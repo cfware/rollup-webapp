@@ -1,6 +1,8 @@
 import path from 'path';
 
 import gulp from 'gulp';
+import gulpCleanCSS from 'gulp-clean-css';
+import gulpHtmlmin from 'gulp-htmlmin';
 import gulpIf from 'gulp-if';
 import gulpRename from 'gulp-rename';
 import pump from 'pump';
@@ -11,7 +13,7 @@ import { terser } from "rollup-plugin-terser";
 import sourcemapsMapSources from '@gulp-sourcemaps/map-sources';
 import sourcemapsSourcesContent from '@gulp-sourcemaps/sources-content';
 import sourcemapsMapFile from '@gulp-sourcemaps/map-file';
-import {wwwroot, rootPath, babelrc} from './utils';
+import {wwwroot, rootPath, babelrc, minifyCSS, htmlMinifier} from './utils';
 
 function renameAssets() {
 	const nodeModulesEx = /^node_modules/;
@@ -62,6 +64,8 @@ function rollup() {
 function copyFiles() {
 	return pump(
 		gulp.src(['html/**', '!**/*.js'], {nodir: true}),
+		gulpIf('**/*.css', gulpCleanCSS(minifyCSS)),
+		gulpIf('**/*.html', gulpHtmlmin(htmlMinifier)),
 		gulp.dest(wwwroot)
 	);
 }
