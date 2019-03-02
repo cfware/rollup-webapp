@@ -7,7 +7,9 @@ import pump from 'pump';
 import merge2 from 'merge2';
 import vinylRollup from 'vinyl-rollup';
 import babel from 'rollup-plugin-babel';
-import mapSources from '@gulp-sourcemaps/map-sources';
+import sourcemapsMapSources from '@gulp-sourcemaps/map-sources';
+import sourcemapsSourcesContent from '@gulp-sourcemaps/sources-content';
+import sourcemapsMapFile from '@gulp-sourcemaps/map-file';
 import {wwwroot, rootPath, babelrc} from './utils';
 
 function renameAssets() {
@@ -41,16 +43,11 @@ function rollup() {
 			modulePath
 		}),
 		renameAssets(),
-		gulpIf(
-			file => {
-				if (file.sourceMap) {
-					file.sourceMap.file = file.basename;
-				}
-
-				return true;
-			},
-			mapSources(sourcePath => sourcePath.replace(relativeModules, './assets'))
-		),
+		sourcemapsMapFile((_, file) => file.basename),
+		sourcemapsMapSources(sourcePath => sourcePath.replace(relativeModules, './assets')),
+		sourcemapsSourcesContent({
+			clear: (filename, mainFile) => filename !== mainFile
+		}),
 		gulp.dest(wwwroot, {sourcemaps: '.'})
 	);
 }
