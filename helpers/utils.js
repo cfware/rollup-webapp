@@ -1,5 +1,4 @@
 import path from 'path';
-import terser from 'terser';
 
 export const rootPath = (...args) => path.resolve(__dirname, '..', ...args);
 export const wwwroot = rootPath('wwwroot');
@@ -30,7 +29,8 @@ export const htmlMinifier = {
 	collapseWhitespace: true,
 	removeComments: true,
 	minifyCSS,
-	minifyJS: text => terser.minify(text, minifyJS).code,
+	/* Using terser here has caused babel-plugin-template-html-minifier to fail. */
+	minifyJS: false,
 	keepClosingSlash: true
 };
 
