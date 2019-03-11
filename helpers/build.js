@@ -1,14 +1,11 @@
 import path from 'path';
 
 import gulp from 'gulp';
-import gulpBrotli from 'gulp-brotli';
 import gulpCleanCSS from 'gulp-clean-css';
-import gulpClone from 'gulp-clone';
-import gulpGzip from 'gulp-gzip';
 import gulpHtmlmin from 'gulp-htmlmin';
 import gulpIf from 'gulp-if';
 import gulpRename from 'gulp-rename';
-import gulpSkipFile from 'gulp-skip-file';
+import gulpWebCompress from 'gulp-web-compress';
 import pump from 'pump';
 import merge2 from 'merge2';
 import vinylRollup from 'vinyl-rollup';
@@ -76,27 +73,12 @@ export const build = () => {
 		process.env.NODE_ENV = 'production';
 	}
 
-	const base = merge2([
-		rollup(),
-		copyFiles()
-	]);
-
-	const gzip = pump(
-		base,
-		gulpClone(),
-		gulpGzip({skipGrowingFiles: true}),
-		gulpIf('!**/*.gz', gulpSkipFile())
-	);
-
-	const brotli = pump(
-		base,
-		gulpClone(),
-		gulpBrotli.compress({skipLarger: true}),
-		gulpIf('!**/*.br', gulpSkipFile())
-	);
-
 	return pump(
-		merge2([gzip, brotli]),
+		merge2([
+			rollup(),
+			copyFiles()
+		]),
+		gulpWebCompress(),
 		gulp.dest(wwwroot)
 	);
 };
