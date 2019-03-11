@@ -90,3 +90,10 @@ export const babelrc = {
 		plugins: ['transform-commonjs']
 	}]
 };
+
+export const pipelineError = error => {
+	if (error) {
+		console.error(error);
+		throw error;
+	}
+};

@@ -1,12 +1,12 @@
 import path from 'path';
 
+import pipeline from 'stream.pipeline-shim';
 import gulp from 'gulp';
 import gulpCleanCSS from 'gulp-clean-css';
 import gulpHtmlmin from 'gulp-htmlmin';
 import gulpIf from 'gulp-if';
 import gulpRename from 'gulp-rename';
 import gulpWebCompress from 'gulp-web-compress';
-import pump from 'pump';
 import merge2 from 'merge2';
 import vinylRollup from 'vinyl-rollup';
 import babel from 'rollup-plugin-babel';
@@ -14,7 +14,7 @@ import {terser} from 'rollup-plugin-terser';
 import sourcemapsMapSources from '@gulp-sourcemaps/map-sources';
 import sourcemapsSourcesContent from '@gulp-sourcemaps/sources-content';
 import sourcemapsMapFile from '@gulp-sourcemaps/map-file';
-import {wwwroot, rootPath, babelrc, minifyCSS, htmlMinifier, minifyJS} from './utils';
+import {wwwroot, rootPath, babelrc, minifyCSS, htmlMinifier, minifyJS, pipelineError} from './utils';
 
 function renameAssets() {
 	const nodeModulesEx = /^node_modules/;
@@ -29,7 +29,7 @@ function rollup() {
 	const modulePath = rootPath('node_modules');
 	const relativeModules = path.relative(path.dirname(bundleEntry), modulePath);
 
-	return pump(
+	return pipeline(
 		vinylRollup({
 			rollup: {
 				input: bundleEntry,
@@ -55,16 +55,18 @@ function rollup() {
 		sourcemapsSourcesContent({
 			clear: (filename, mainFile) => filename !== mainFile
 		}),
-		gulp.dest(wwwroot, {sourcemaps: '.'})
+		gulp.dest('/', {sourcemaps: '.'}),
+		pipelineError
 	);
 }
 
 function copyFiles() {
-	return pump(
+	return pipeline(
 		gulp.src(['html/**', '!**/*.js'], {nodir: true}),
 		gulpIf('**/*.css', gulpCleanCSS(minifyCSS)),
 		gulpIf('**/*.html', gulpHtmlmin(htmlMinifier)),
-		gulp.dest(wwwroot, {sourcemaps: '.'})
+		gulp.dest('/', {sourcemaps: '.'}),
+		pipelineError
 	);
 }
 
@@ -73,12 +75,13 @@ export const build = () => {
 		process.env.NODE_ENV = 'production';
 	}
 
-	return pump(
+	return pipeline(
 		merge2([
 			rollup(),
 			copyFiles()
 		]),
 		gulpWebCompress(),
-		gulp.dest(wwwroot)
+		gulp.dest(wwwroot),
+		pipelineError
 	);
 };
