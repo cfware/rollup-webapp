@@ -32,7 +32,7 @@
 		"@babel/preset-env": "^7.3.4",
 		"@babel/register": "^7.0.0",
 		"@cfware/ava-selenium-manager": "^0.2.0",
-		"@cfware/eslint-config-browser": "^0.1.2",
+		"@cfware/eslint-config-browser": "^0.2.0",
 		"@cfware/fastify-test-helper": "^0.2.0",
 		"@cfware/shadow-element": "^0.4.0",
 		"@gulp-sourcemaps/map-file": "^1.0.0",
