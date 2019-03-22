@@ -34,7 +34,7 @@
 		"@cfware/ava-selenium-manager": "^0.2.0",
 		"@cfware/eslint-config-browser": "^0.2.0",
 		"@cfware/fastify-test-helper": "^0.2.0",
-		"@cfware/shadow-element": "^0.4.0",
+		"@cfware/shadow-element": "^0.5.0",
 		"@gulp-sourcemaps/map-file": "^1.0.0",
 		"@gulp-sourcemaps/map-sources": "^1.0.0",
 		"@gulp-sourcemaps/sources-content": "^1.1.0",
