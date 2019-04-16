@@ -63,7 +63,7 @@
 		"gulp-web-compress": "^0.2.0",
 		"gulplog": "^1.0.0",
 		"merge2": "^1.2.3",
-		"nyc": "^13.3.0",
+		"nyc": "^14.0.0",
 		"rollup": "^1.4.0",
 		"rollup-plugin-babel": "^4.3.2",
 		"rollup-plugin-terser": "^4.0.4",
