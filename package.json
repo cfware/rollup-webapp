@@ -44,7 +44,7 @@
 		"babel-plugin-bundled-import-meta": "^0.3.0",
 		"babel-plugin-istanbul": "^5.1.1",
 		"babel-plugin-remove-ungap": "^1.0.0",
-		"babel-plugin-template-html-minifier": "^2.2.1",
+		"babel-plugin-template-html-minifier": "^3.0.0",
 		"babel-plugin-transform-commonjs": "^1.1.5",
 		"camelcase": "^5.0.0",
 		"chromedriver": "^74.0.0",
