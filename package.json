@@ -60,7 +60,7 @@
 		"gulp-markdown": "^4.0.0",
 		"gulp-rename": "^1.4.0",
 		"gulp-replace": "^1.0.0",
-		"gulp-web-compress": "^0.2.0",
+		"gulp-web-compress": "^0.3.0",
 		"gulplog": "^1.0.0",
 		"merge2": "^1.2.3",
 		"nyc": "^14.0.0",
