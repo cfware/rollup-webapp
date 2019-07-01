@@ -47,7 +47,7 @@
 		"babel-plugin-template-html-minifier": "^3.0.0",
 		"babel-plugin-transform-commonjs": "^1.1.5",
 		"camelcase": "^5.0.0",
-		"chromedriver": "^74.0.0",
+		"chromedriver": "^75.0.1",
 		"del": "^4.0.0",
 		"fastify": "^2.0.0",
 		"fastify-babel": "^1.1.0",
