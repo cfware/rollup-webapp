@@ -48,7 +48,7 @@
 		"babel-plugin-transform-commonjs": "^1.1.5",
 		"camelcase": "^5.0.0",
 		"chromedriver": "^74.0.0",
-		"del": "^4.0.0",
+		"del": "^5.0.0",
 		"fastify": "^2.0.0",
 		"fastify-babel": "^1.1.0",
 		"fastify-static": "^2.3.4",
