@@ -68,7 +68,7 @@
 		"rollup-plugin-babel": "^4.3.2",
 		"rollup-plugin-terser": "^4.0.4",
 		"stream.pipeline-shim": "^1.0.4",
-		"vinyl-rollup": "^0.5.0",
+		"vinyl-rollup": "^0.6.0",
 		"xo": "^0.24.0"
 	},
 	"nyc": {
