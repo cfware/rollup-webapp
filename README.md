@@ -6,6 +6,11 @@
 
 Web Application Template
 
+## This repository is archived
+
+The libraries used here are still maintained but I do not have time to maintain
+this template repository.  I recommend checking out [@open-wc/building-rollup].
+
 
 ## Motivation
 
@@ -240,3 +245,5 @@ the grabbed images.
 [test/chrome.js]: https://github.com/cfware/rollup-webapp/blob/master/test/chrome.js
 [test/helpers/pages.js]: https://github.com/cfware/rollup-webapp/blob/master/test/helpers/pages.js
 [tests/images]: https://github.com/cfware/rollup-webapp/tree/master/test/images/
+
+[@open-wc/building-rollup]: https://www.npmjs.com/package/@open-wc/building-rollup
